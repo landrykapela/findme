@@ -109,14 +109,80 @@ const renderPersonalDetails = () => {
   personalDetails.appendChild(email);
   return personalDetails;
 };
+//render other details
+const renderOtherDetails = () => {
+  const otherDetails = document.createElement("div");
+  otherDetails.classList.add("horizontal");
+
+  const cardWork = document.createElement("div");
+  cardWork.id = "card-work";
+  cardWork.classList.add("card");
+  const title = document.createElement("h4");
+  title.textContent = "Worked at";
+  cardWork.appendChild(title);
+
+  const listWork = document.createElement("ul");
+  let companies = answers[7] != undefined ? answers[7].split(",") : null;
+  console.log("companies: ", companies);
+  if (companies == null) {
+    listWork.innderHTML = "<li>No information</li>";
+  } else {
+    for (let i = 0; i < companies.length; i++) {
+      const item = document.createElement("li");
+      item.textContent = companies[i];
+      listWork.appendChild(item);
+    }
+  }
+  cardWork.appendChild(listWork);
+
+  const cardEd = document.createElement("div");
+  cardEd.id = "card-ed";
+  cardEd.classList.add("card");
+  const titleEd = document.createElement("h4");
+  titleEd.textContent = "Education";
+  cardEd.appendChild(titleEd);
+
+  const ed = document.createElement("p");
+  let school = answers[4];
+  let level = answers[3];
+  ed.textContent = level + " from " + school;
+
+  cardEd.appendChild(ed);
+
+  const cardSkill = document.createElement("div");
+  cardSkill.id = "card-skill";
+  cardSkill.classList.add("card");
+  const titleSkills = document.createElement("h4");
+  titleSkills.textContent = "Possess these skills";
+  cardSkill.appendChild(titleSkills);
+
+  const listSkill = document.createElement("ul");
+  let skills = answers[8] != undefined ? answers[8].split(",") : null;
+  if (skills == null) {
+    listSkill.innderHTML = "<li>No information</li>";
+  } else {
+    for (let i = 0; i < skills.length; i++) {
+      const item = document.createElement("li");
+      item.textContent = skills[i];
+      listSkill.appendChild(item);
+    }
+  }
+  cardSkill.appendChild(listSkill);
+
+  otherDetails.appendChild(cardWork);
+  otherDetails.appendChild(cardEd);
+  otherDetails.appendChild(cardSkill);
+  return otherDetails;
+};
 //create summary
 const createSummary = () => {
   const summary = document.getElementById("summary");
   const details = document.createElement("div");
   details.id = "details";
   const personalDetails = renderPersonalDetails();
-
+  const otherDetails = renderOtherDetails();
   details.appendChild(personalDetails);
+  details.appendChild(otherDetails);
   summary.appendChild(details);
   summary.classList.remove("hidden");
   //   summary.classList.add("slide-up");
